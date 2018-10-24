@@ -31,15 +31,18 @@ void dostuff (int sock)
     char buffer[256];
 
     bzero(buffer,256);
-    n = read(sock,buffer,255);
-    if (n < 0) error_server("ERROR reading from socket");
-    printf("Here is the message: %s\n",buffer);
-    n = write(sock,"I got your message",18);
-    if (n < 0) error_server("ERROR writing to socket");
+    while(1){
+        n = read(sock,buffer,255);
+        if (n < 0) error_server("ERROR reading from socket");
+        printf("Here is the message: %s\n",buffer);
+        n = write(sock,"I got your message",18);
+        if (n < 0) error_server("ERROR writing to socket");
     }
 
-    int main_server(char const *argvs)
-    {
+}
+
+int main_server(char const *argvs)
+{
      int sockfd, newsockfd, portno, pid;
      struct sockaddr_in serv_addr, cli_addr;
      socklen_t clilen;
